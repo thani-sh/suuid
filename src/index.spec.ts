@@ -54,7 +54,7 @@ describe('sid', () => {
   it('should include temporal ordering', () => {
     const id1 = sid('usr', { timestamp: 1000 });
     const id2 = sid('usr', { timestamp: 2000 });
-    assert.notStrictEqual(id1, id2);
+    assert.ok(id1 < id2);
   });
 
   it('should use URL-friendly characters', () => {

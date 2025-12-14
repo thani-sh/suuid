@@ -1,7 +1,7 @@
 {
   "name": "@thani-sh/shortid",
   "version": "1.0.0",
-  "description": "A typescript library to generate a string identifier with temporal ordering and a short prefix",
+  "description": "Generate identifiers with a temporal ordering and a prefix",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

@@ -1,5 +1,5 @@
 const BUFFER = Buffer.allocUnsafe(8);
-const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+const randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
 
 /**
  * Converts a number to a URL-friendly base64 string.
@@ -18,7 +18,7 @@ export function encodeBase64UrlFriendly(num: number): string {
 export function generateRandomBase64(length: number): string {
   let result = '';
   for (let i = 0; i < length; i++) {
-    result += CHARS.charAt(Math.floor(Math.random() * CHARS.length));
+    result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
   }
   return result;
 }
