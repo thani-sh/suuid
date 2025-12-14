@@ -44,7 +44,7 @@ export function sid(prefix?: string, options?: SidOptions): string {
   const idBody = `${temporalSegment}${randomSegment}`;
   
   // Return with or without prefix
-  return prefix ? `${prefix}:${idBody}` : idBody;
+  return prefix && prefix.length > 0 ? `${prefix}:${idBody}` : idBody;
 }
 
 export default sid;
