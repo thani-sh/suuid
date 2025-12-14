@@ -1,7 +1,7 @@
 {
-  "name": "@thani-sh/shortid",
+  "name": "@thani-sh/suuid",
   "version": "1.0.0",
-  "description": "Generate identifiers with a temporal ordering and a prefix",
+  "description": "Short UUIDs - UUID wrapper with base62 encoding for shorter string representation",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -21,16 +21,20 @@
     "test": "node --import tsx --test src/index.spec.ts"
   },
   "keywords": [
-    "id",
-    "shortid",
+    "uuid",
+    "suuid",
+    "short-uuid",
     "identifier",
-    "temporal",
-    "base64"
+    "base62"
   ],
   "author": "",
   "license": "MIT",
+  "dependencies": {
+    "uuid": "^11.0.3"
+  },
   "devDependencies": {
     "@types/node": "^25.0.2",
+    "@types/uuid": "^10.0.0",
     "tsx": "^4.19.2",
     "typescript": "^5.9.3"
   }

@@ -1,23 +1,39 @@
-import { encodeBase64UrlFriendly, generateRandomBase64 } from './base64.js';
+import { v4 as uuidv4, v7 as uuidv7 } from 'uuid';
+import { encodeBase62, decodeBase62 } from './base62.js';
 
 /**
- * Configuration options for generating short IDs.
+ * Generates a new SUUID based on UUID v4 (random).
+ * Returns a base62-encoded short UUID.
  */
-export interface Options {
-  timestamp?: number;
-  length?: number;
+export function v4(): string {
+  const uuid = uuidv4();
+  return encodeBase62(uuid);
 }
 
 /**
- * Generates a short ID with optional prefix and configuration.
+ * Generates a new SUUID based on UUID v7 (timestamp-based).
+ * Note: UUID v8 is custom/vendor-specific, so using v7 which is timestamp-based.
+ * Returns a base62-encoded short UUID.
  */
-export function sid(prefix?: string, options?: Options): string {
-  const timestamp = options?.timestamp ?? Date.now();
-  const randomLength = options?.length ?? 8;
-  const temporalSegment = encodeBase64UrlFriendly(timestamp);
-  const randomSegment = generateRandomBase64(randomLength);
-  const idBody = `${temporalSegment}${randomSegment}`;
-  return prefix && prefix.length > 0 ? `${prefix}:${idBody}` : idBody;
+export function v8(): string {
+  const uuid = uuidv7();
+  return encodeBase62(uuid);
 }
 
-export default sid;
+/**
+ * Encodes a standard UUID (8-4-4-4-12 format) to a SUUID (base62 encoded).
+ * @param uuid - A UUID string in the format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+ * @returns A base62-encoded short UUID
+ */
+export function encode(uuid: string): string {
+  return encodeBase62(uuid);
+}
+
+/**
+ * Decodes a SUUID (base62 encoded) back to standard UUID format (8-4-4-4-12).
+ * @param suuid - A base62-encoded short UUID
+ * @returns A UUID string in the format xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+ */
+export function decode(suuid: string): string {
+  return decodeBase62(suuid);
+}
