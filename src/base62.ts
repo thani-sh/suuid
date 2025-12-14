@@ -1,4 +1,5 @@
 const BASE62_ALPHABET = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const UUID_HEX_LENGTH = 32; // 128 bits / 4 bits per hex character
 
 /**
  * Encodes a UUID (in hex format without dashes) to base62 string.
@@ -42,8 +43,8 @@ export function decodeBase62(encoded: string): string {
     num = num * base + BigInt(value);
   }
   
-  // Convert back to hex and pad to 32 characters
-  let hex = num.toString(16).padStart(32, '0');
+  // Convert back to hex and pad to UUID_HEX_LENGTH characters
+  let hex = num.toString(16).padStart(UUID_HEX_LENGTH, '0');
   
   // Format as UUID: 8-4-4-4-12
   return [
