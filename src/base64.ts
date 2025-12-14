@@ -2,8 +2,11 @@
  * Converts a number to a URL-friendly base64 string
  */
 export function encodeBase64UrlFriendly(num: number): string {
-  // Convert number to buffer and then to base64
-  const buffer = Buffer.from(num.toString(36));
+  // Convert number to buffer (8 bytes for a 64-bit number)
+  const buffer = Buffer.allocUnsafe(8);
+  buffer.writeBigUInt64BE(BigInt(num));
+  
+  // Convert to base64 and make URL-friendly
   return buffer.toString('base64')
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
