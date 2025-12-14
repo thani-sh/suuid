@@ -1,41 +1,25 @@
-# shortid
+# @thani-sh/shortid
 
 A TypeScript library to generate string identifiers with temporal ordering and optional short prefixes.
 
 ## Features
 
-- 🚀 **ESM Module** - Built as an ES module with TypeScript type definitions
-- ⏰ **Temporal Ordering** - IDs include timestamp-based segments for chronological sorting
-- 🔀 **Random Component** - Ensures uniqueness with configurable random segments
-- 🌐 **URL-Friendly** - Uses base64 encoding with URL-safe characters
-- 📝 **TypeScript** - Full TypeScript support with type definitions
-- 🎯 **Customizable** - Optional prefix, custom timestamps, and configurable length
+This library generates unique short IDs with temporal ordering using URL-friendly base64 encoding, combining a timestamp-based segment with a random component. Built as an ESM module with full TypeScript support, it allows customizable prefixes and configurable random segment lengths.
 
 ## Installation
 
 ```bash
-npm install shortid
+npm install @thani-sh/shortid
 ```
 
 ## Usage
 
 ```typescript
-import { sid } from 'shortid';
+import { sid } from '@thani-sh/shortid';
 
-// Generate ID without prefix
 const id1 = sid();
-// Example: bWo1b29pZXgGlavhuNl
-
-// Generate ID with prefix
 const id2 = sid('usr');
-// Example: usr:bWo1b29pZXkhKIG5BmV
-
-// Generate ID with custom options
-const id3 = sid('msg', { 
-  timestamp: Date.now(), 
-  length: 16 
-});
-// Example: msg:bWo1b29pZXkeX-7n7m5baxQtIcD
+const id3 = sid('msg', { timestamp: Date.now(), length: 16 });
 ```
 
 ## Format
@@ -73,17 +57,10 @@ Generates a short ID.
 #### Examples
 
 ```typescript
-// Basic usage
-sid()                                    // No prefix
-sid('usr')                              // With prefix
-
-// Custom timestamp (useful for testing)
+sid()
+sid('usr')
 sid('usr', { timestamp: 1234567890 })
-
-// Custom random segment length
 sid('usr', { length: 16 })
-
-// Combined options
 sid('msg', { timestamp: Date.now(), length: 12 })
 ```
 
@@ -92,14 +69,9 @@ sid('msg', { timestamp: Date.now(), length: 12 })
 This library is written in TypeScript and includes type definitions:
 
 ```typescript
-import { sid, SidOptions } from 'shortid';
+import { sid, Options } from '@thani-sh/shortid';
 
-interface SidOptions {
-  timestamp?: number;
-  length?: number;
-}
-
-const options: SidOptions = {
+const options: Options = {
   timestamp: Date.now(),
   length: 10
 };
@@ -109,5 +81,5 @@ const id: string = sid('usr', options);
 
 ## License
 
-ISC
+MIT
 
