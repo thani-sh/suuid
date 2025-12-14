@@ -1,0 +1,37 @@
+{
+  "name": "@thani-sh/shortid",
+  "version": "1.0.0",
+  "description": "Generate identifiers with a temporal ordering and a prefix",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "node --import tsx --test src/index.spec.ts"
+  },
+  "keywords": [
+    "id",
+    "shortid",
+    "identifier",
+    "temporal",
+    "base64"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.0.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.9.3"
+  }
+}
