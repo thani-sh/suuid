@@ -1,10 +1,16 @@
 import { encodeBase64UrlFriendly, generateRandomBase64 } from './base64.js';
 
+/**
+ * Configuration options for generating short IDs.
+ */
 export interface Options {
   timestamp?: number;
   length?: number;
 }
 
+/**
+ * Generates a short ID with optional prefix and configuration.
+ */
 export function sid(prefix?: string, options?: Options): string {
   const timestamp = options?.timestamp ?? Date.now();
   const randomLength = options?.length ?? 8;

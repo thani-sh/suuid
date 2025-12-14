@@ -1,17 +1,24 @@
+const BUFFER = Buffer.allocUnsafe(8);
+const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+
+/**
+ * Converts a number to a URL-friendly base64 string.
+ */
 export function encodeBase64UrlFriendly(num: number): string {
-  const buffer = Buffer.allocUnsafe(8);
-  buffer.writeBigUInt64BE(BigInt(num));
-  return buffer.toString('base64')
+  BUFFER.writeBigUInt64BE(BigInt(num));
+  return BUFFER.toString('base64')
     .replace(/\+/g, '-')
     .replace(/\//g, '_')
     .replace(/=/g, '');
 }
 
+/**
+ * Generates a random URL-friendly base64 string of specified length.
+ */
 export function generateRandomBase64(length: number): string {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
   let result = '';
   for (let i = 0; i < length; i++) {
-    result += chars.charAt(Math.floor(Math.random() * chars.length));
+    result += CHARS.charAt(Math.floor(Math.random() * CHARS.length));
   }
   return result;
 }
