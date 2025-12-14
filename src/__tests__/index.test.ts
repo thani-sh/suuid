@@ -13,16 +13,20 @@ describe('sid', () => {
     expect(id).toMatch(/^usr:/);
   });
 
-  it('should validate prefix length', () => {
-    expect(() => sid('toolong')).toThrow('Prefix must be 1-4 characters long');
-    expect(() => sid('')).toThrow('Prefix must be 1-4 characters long');
-  });
-
-  it('should accept valid prefix lengths', () => {
+  it('should accept prefixes of any length', () => {
     expect(() => sid('a')).not.toThrow();
     expect(() => sid('ab')).not.toThrow();
     expect(() => sid('abc')).not.toThrow();
     expect(() => sid('abcd')).not.toThrow();
+    expect(() => sid('longer')).not.toThrow();
+    expect(() => sid('verylongprefix')).not.toThrow();
+  });
+
+  it('should accept empty string as prefix', () => {
+    const id = sid('');
+    // Empty prefix should still work, no colon separator
+    expect(id).toBeDefined();
+    expect(typeof id).toBe('string');
   });
 
   it('should use custom timestamp', () => {

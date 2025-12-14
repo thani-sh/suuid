@@ -17,7 +17,7 @@ export interface SidOptions {
  * 
  * Format: <prefix>:<temporal-segment><random-segment>
  * 
- * @param prefix - Optional 1-4 letter prefix
+ * @param prefix - Optional prefix (1-4 characters recommended for brevity)
  * @param options - Optional configuration
  * @returns Generated short ID
  * 
@@ -28,11 +28,6 @@ export interface SidOptions {
  * ```
  */
 export function sid(prefix?: string, options?: SidOptions): string {
-  // Validate prefix length if provided
-  if (prefix !== undefined && (prefix.length < 1 || prefix.length > 4)) {
-    throw new Error('Prefix must be 1-4 characters long');
-  }
-  
   // Get timestamp (use provided or current)
   const timestamp = options?.timestamp ?? Date.now();
   

@@ -46,7 +46,7 @@ Generated IDs follow this format:
 <prefix>:<temporal-segment><random-segment>
 ```
 
-- **prefix** (optional): 1-4 character string chosen by the user
+- **prefix** (optional): String prefix (1-4 characters recommended for brevity)
 - **temporal-segment**: URL-friendly base64 encoded timestamp
 - **random-segment**: URL-friendly base64 encoded random string
 
@@ -58,9 +58,9 @@ Generates a short ID.
 
 #### Parameters
 
-- `prefix` (optional): A 1-4 character string prefix
-  - Must be between 1 and 4 characters if provided
-  - Throws error if length is invalid
+- `prefix` (optional): A string prefix
+  - 1-4 characters recommended for brevity
+  - Any length accepted
 
 - `options` (optional): Configuration object
   - `timestamp` (number): Custom timestamp (default: `Date.now()`)
