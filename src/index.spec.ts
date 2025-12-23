@@ -1,6 +1,48 @@
 import { describe, it } from 'node:test';
 import assert from 'node:assert';
-import { v4, v8, encode, decode } from './index.js';
+import { v1, v3, v4, v5, v6, v7, encode, decode } from './index.js';
+
+describe('v1', () => {
+  it('should generate a base62-encoded UUID v1', () => {
+    const id = v1();
+    assert.ok(id);
+    assert.strictEqual(typeof id, 'string');
+    assert.ok(id.length > 0);
+    assert.ok(id.length < 36); // Should be shorter than standard UUID
+  });
+
+  it('should generate different ids on successive calls', () => {
+    const id1 = v1();
+    const id2 = v1();
+    assert.notStrictEqual(id1, id2);
+  });
+
+  it('should generate valid base62 strings', () => {
+    const id = v1();
+    assert.match(id, /^[0-9A-Za-z]+$/);
+  });
+});
+
+describe('v3', () => {
+  it('should generate a base62-encoded UUID v3', () => {
+    const id = v3('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    assert.ok(id);
+    assert.strictEqual(typeof id, 'string');
+    assert.ok(id.length > 0);
+    assert.ok(id.length < 36);
+  });
+
+  it('should generate same id for same input', () => {
+    const id1 = v3('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    const id2 = v3('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    assert.strictEqual(id1, id2);
+  });
+
+  it('should generate valid base62 strings', () => {
+    const id = v3('test', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    assert.match(id, /^[0-9A-Za-z]+$/);
+  });
+});
 
 describe('v4', () => {
   it('should generate a base62-encoded UUID v4', () => {
@@ -23,9 +65,51 @@ describe('v4', () => {
   });
 });
 
-describe('v8', () => {
-  it('should generate a base62-encoded UUID v7/v8', () => {
-    const id = v8();
+describe('v5', () => {
+  it('should generate a base62-encoded UUID v5', () => {
+    const id = v5('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    assert.ok(id);
+    assert.strictEqual(typeof id, 'string');
+    assert.ok(id.length > 0);
+    assert.ok(id.length < 36);
+  });
+
+  it('should generate same id for same input', () => {
+    const id1 = v5('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    const id2 = v5('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    assert.strictEqual(id1, id2);
+  });
+
+  it('should generate valid base62 strings', () => {
+    const id = v5('test', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+    assert.match(id, /^[0-9A-Za-z]+$/);
+  });
+});
+
+describe('v6', () => {
+  it('should generate a base62-encoded UUID v6', () => {
+    const id = v6();
+    assert.ok(id);
+    assert.strictEqual(typeof id, 'string');
+    assert.ok(id.length > 0);
+    assert.ok(id.length < 36);
+  });
+
+  it('should generate different ids on successive calls', () => {
+    const id1 = v6();
+    const id2 = v6();
+    assert.notStrictEqual(id1, id2);
+  });
+
+  it('should generate valid base62 strings', () => {
+    const id = v6();
+    assert.match(id, /^[0-9A-Za-z]+$/);
+  });
+});
+
+describe('v7', () => {
+  it('should generate a base62-encoded UUID v7', () => {
+    const id = v7();
     assert.ok(id);
     assert.strictEqual(typeof id, 'string');
     assert.ok(id.length > 0);
@@ -33,13 +117,13 @@ describe('v8', () => {
   });
 
   it('should generate different ids on successive calls', () => {
-    const id1 = v8();
-    const id2 = v8();
+    const id1 = v7();
+    const id2 = v7();
     assert.notStrictEqual(id1, id2);
   });
 
   it('should generate valid base62 strings', () => {
-    const id = v8();
+    const id = v7();
     assert.match(id, /^[0-9A-Za-z]+$/);
   });
 });
@@ -94,6 +178,13 @@ describe('decode', () => {
 });
 
 describe('integration', () => {
+  it('should allow encoding and decoding v1 UUIDs', () => {
+    const suuid = v1();
+    const uuid = decode(suuid);
+    assert.match(uuid, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
+    assert.strictEqual(encode(uuid), suuid);
+  });
+
   it('should allow encoding and decoding v4 UUIDs', () => {
     const suuid = v4();
     const uuid = decode(suuid);
@@ -101,8 +192,8 @@ describe('integration', () => {
     assert.strictEqual(encode(uuid), suuid);
   });
 
-  it('should allow encoding and decoding v8 UUIDs', () => {
-    const suuid = v8();
+  it('should allow encoding and decoding v7 UUIDs', () => {
+    const suuid = v7();
     const uuid = decode(suuid);
     assert.match(uuid, /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/);
     assert.strictEqual(encode(uuid), suuid);

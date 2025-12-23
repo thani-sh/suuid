@@ -1,7 +1,7 @@
 {
   "name": "@thani-sh/suuid",
   "version": "1.0.0",
-  "description": "Short UUIDs - UUID wrapper with base62 encoding for shorter string representation",
+  "description": "Shorter base62 encoded UUIDs",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",

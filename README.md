@@ -4,10 +4,9 @@ A TypeScript library that wraps the UUID library to generate short UUIDs using b
 
 ## Features
 
-This library generates short, URL-safe unique identifiers by encoding standard UUIDs (UUID v4 and v7) as base62 strings. This results in significantly shorter strings compared to the standard 36-character UUID format while maintaining the same uniqueness guarantees.
+This library generates short, URL-safe unique identifiers by encoding standard UUIDs as base62 strings. This results in significantly shorter strings compared to the standard 36-character UUID format while maintaining the same uniqueness guarantees.
 
-- **UUID v4 Support**: Random UUIDs for general-purpose unique identifiers
-- **UUID v7 Support**: Timestamp-based UUIDs for sortable identifiers (exposed as `v8()`)
+- **All UUID Versions**: Support for UUID v1, v3, v4, v5, v6, and v7
 - **Base62 Encoding**: Compact representation using alphanumeric characters (0-9, A-Z, a-z)
 - **Bidirectional Conversion**: Encode standard UUIDs to short format and decode back to standard format
 - **TypeScript Support**: Full type definitions included
@@ -22,26 +21,58 @@ npm install @thani-sh/suuid
 ## Usage
 
 ```typescript
-import { v4, v8, encode, decode } from '@thani-sh/suuid';
+import { v1, v3, v4, v5, v6, v7, encode, decode } from '@thani-sh/suuid';
 
-// Generate a new SUUID based on UUID v8 (timestamp-based)
-const id = v8();
-// Example output: "2QY9COoAhfTGKcfPqHXCUV"
+// Generate a new SUUID based on UUID v7 (timestamp-based)
+const id = v7();
+// Example output: "31xXF9ob9Zc8lajMtUTlo"
 
 // Generate a new SUUID based on UUID v4 (random)
 const id2 = v4();
-// Example output: "5wbwf6yUxVBcr48AMbz9cb"
+// Example output: "H5eY5NytpCS0GoagAAOxS"
+
+// Generate a new SUUID based on UUID v1 (timestamp and MAC address)
+const id3 = v1();
+// Example output: "4XmAmngtVQTR25oClDMdlH"
 
 // Parse a SUUID back to UUID (8-4-4-4-12 format)
 const uuid = decode(id);
-// Example output: "550e8400-e29b-41d4-a716-446655440000"
+// Example output: "019b4a5a-fa57-778a-a1e0-cc25c5765935"
 
 // Encode a UUID to SUUID
 const suuid = encode(uuid);
-// Example output: "2QY9COoAhfTGKcfPqHXCUV"
+// Example output: "31xXF9ob9Zc8lajMtUTlo"
 ```
 
 ## API
+
+### `v1()`
+
+Generates a new SUUID based on UUID v1 (timestamp and MAC address).
+
+**Returns:** `string` - A base62-encoded short UUID
+
+**Example:**
+```typescript
+const id = v1();
+console.log(id); // "4XmAmngtVQTR25oClDMdlH"
+```
+
+### `v3(name, namespace)`
+
+Generates a new SUUID based on UUID v3 (namespace and name, MD5).
+
+**Parameters:**
+- `name` (string): The name to hash
+- `namespace` (string): The namespace UUID
+
+**Returns:** `string` - A base62-encoded short UUID
+
+**Example:**
+```typescript
+const id = v3('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+console.log(id); // "M1wYckVjHtf9kNJADE0zD"
+```
 
 ### `v4()`
 
@@ -52,19 +83,47 @@ Generates a new SUUID based on UUID v4 (random).
 **Example:**
 ```typescript
 const id = v4();
-console.log(id); // "5wbwf6yUxVBcr48AMbz9cb"
+console.log(id); // "H5eY5NytpCS0GoagAAOxS"
 ```
 
-### `v8()`
+### `v5(name, namespace)`
 
-Generates a new SUUID based on UUID v7 (timestamp-based). Note that UUID v8 is custom/vendor-specific, so this function uses UUID v7 which provides timestamp-based ordering.
+Generates a new SUUID based on UUID v5 (namespace and name, SHA-1).
+
+**Parameters:**
+- `name` (string): The name to hash
+- `namespace` (string): The namespace UUID
 
 **Returns:** `string` - A base62-encoded short UUID
 
 **Example:**
 ```typescript
-const id = v8();
-console.log(id); // "2QY9COoAhfTGKcfPqHXCUV"
+const id = v5('hello', '6ba7b810-9dad-11d1-80b4-00c04fd430c8');
+console.log(id); // "4TsPdKNpquz4a4J5Fr9yHB"
+```
+
+### `v6()`
+
+Generates a new SUUID based on UUID v6 (timestamp and MAC address, sortable).
+
+**Returns:** `string` - A base62-encoded short UUID
+
+**Example:**
+```typescript
+const id = v6();
+console.log(id); // "wb9faLpPVDIKkfak244qP"
+```
+
+### `v7()`
+
+Generates a new SUUID based on UUID v7 (timestamp-based, sortable).
+
+**Returns:** `string` - A base62-encoded short UUID
+
+**Example:**
+```typescript
+const id = v7();
+console.log(id); // "31xXF9ob9Zc8lajMtUTlo"
 ```
 
 ### `encode(uuid)`
@@ -78,9 +137,9 @@ Encodes a standard UUID (8-4-4-4-12 format) to a SUUID (base62 encoded).
 
 **Example:**
 ```typescript
-const uuid = '550e8400-e29b-41d4-a716-446655440000';
+const uuid = '019b4a5a-fa57-778a-a1e0-cc25c5765935';
 const suuid = encode(uuid);
-console.log(suuid); // "2QY9COoAhfTGKcfPqHXCUV"
+console.log(suuid); // "31xXF9ob9Zc8lajMtUTlo"
 ```
 
 ### `decode(suuid)`
@@ -94,9 +153,9 @@ Decodes a SUUID (base62 encoded) back to standard UUID format (8-4-4-4-12).
 
 **Example:**
 ```typescript
-const suuid = '2QY9COoAhfTGKcfPqHXCUV';
+const suuid = '31xXF9ob9Zc8lajMtUTlo';
 const uuid = decode(suuid);
-console.log(uuid); // "550e8400-e29b-41d4-a716-446655440000"
+console.log(uuid); // "019b4a5a-fa57-778a-a1e0-cc25c5765935"
 ```
 
 **Throws:** Error if the input contains invalid base62 characters
@@ -115,7 +174,7 @@ Standard UUIDs are 36 characters long (including dashes), which can be unwieldy 
 This library is written in TypeScript and includes full type definitions:
 
 ```typescript
-import { v4, v8, encode, decode } from '@thani-sh/suuid';
+import { v1, v3, v4, v5, v6, v7, encode, decode } from '@thani-sh/suuid';
 
 const suuid: string = v4();
 const uuid: string = decode(suuid);
