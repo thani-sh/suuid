@@ -1,6 +1,34 @@
-node_modules/
-dist/
-*.log
-.DS_Store
-example.js
+# dependencies (bun install)
+node_modules
 
+# output
+out
+dist
+build
+*.tgz
+
+# code coverage
+coverage
+*.lcov
+
+# logs
+logs
+*.log
+
+# caches
+.eslintcache
+.cache
+*.tsbuildinfo
+
+# IDEs and tools
+.idea
+.antigravitycli
+
+# Finder (MacOS) folder config
+.DS_Store
+
+# Secrets
+.env
+
+# Project specific
+example.js

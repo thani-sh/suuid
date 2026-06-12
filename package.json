@@ -1,6 +1,6 @@
 {
   "name": "@thani-sh/suuid",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shorter base62 encoded UUIDs",
   "type": "module",
   "main": "./dist/index.js",
@@ -15,10 +15,12 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsc",
+    "build": "rm -rf dist && tsc",
     "clean": "rm -rf dist",
-    "prepublishOnly": "npm run clean && npm run build",
-    "test": "node --import tsx --test src/index.spec.ts"
+    "prepublishOnly": "bun run build",
+    "lint": "prettier --check .",
+    "lint:fix": "prettier --write .",
+    "test": "bun test"
   },
   "keywords": [
     "uuid",
@@ -36,6 +38,13 @@
     "@types/node": "^25.0.2",
     "@types/uuid": "^10.0.0",
     "tsx": "^4.19.2",
-    "typescript": "^5.9.3"
-  }
+    "typescript": "^6.0.3",
+    "@types/bun": "latest",
+    "prettier": "^3.8.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.thani.sh:thani-sh/suuid.git"
+  },
+  "private": true
 }
